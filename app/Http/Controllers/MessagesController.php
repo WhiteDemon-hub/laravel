@@ -16,7 +16,7 @@ class MessagesController extends Controller
     public function index()
     {
         return response() -> json([
-            'message' => Messages::latest()->get()
+            'messages' => Messages::latest()->get()
         ]);
     }
 
@@ -27,7 +27,21 @@ class MessagesController extends Controller
      */
     public function create()
     {
-        //
+        
+    }
+
+    public function postChatHistory(Request $request)
+    {
+        if(Session::has('id'))
+        {
+            $message_left = Messages::where([['user_id_from', '=', Session::get('id')], ['user_id_to', '=', $request->id]]);
+            $message_right = Messages::where([['user_id_from', '=', $request->id], ['user_id_to', '=', Session::get('id')]]);
+            $history = $message_left->union($message_right)->orderBy('id')->get();
+
+            return response() -> json([
+                'history' => $history,
+            ]); 
+        }
     }
 
     /**
@@ -38,12 +52,23 @@ class MessagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     public function postNewMessage(Request $request)
     {
-
+        if(Session::has('id'))
+        {
+            $message = new Messages;
+            $message->user_id_from = Session::get('id');
+            $message->user_id_to = $request->id;
+            $message->content = $request->content;
+            $message->save();
+            return response() -> json([
+                'message' => $message->get(),
+            ]);
+        }
+        return null;
     }
 
     /**

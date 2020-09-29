@@ -45,7 +45,9 @@ class FriendListController extends Controller
                 ->get();
             $FL = $friendLeft->merge($friendRight);
         
-            return $FL;
+            return response() -> json([
+                'ThisUserFriend' => $FL,
+            ]);
         }
         else
             return null;
@@ -67,7 +69,9 @@ class FriendListController extends Controller
                 ->get();
             $FL = $friendLeft->merge($friendRight);
         
-            return $FL;
+            return response() -> json([
+                'UserFriend' => $FL,
+            ]);
     }
 
     public function getResponseFriend()
@@ -81,7 +85,9 @@ class FriendListController extends Controller
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_from')
                 ->get();
 
-            return $FL;
+            return response() -> json([
+                'ResponseFriend' => $FL,
+            ]);
         }
         else
             return null;

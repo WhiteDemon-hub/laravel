@@ -25,6 +25,8 @@ Route::resource('user-register', 'UserController@postRegister');
 
 //Маршруты сообщении
 Route::resource('message', 'MessagesController');
+Route::post('history-message', 'MessagesController@postChatHistory');
+Route::post('history-new-message', 'MessagesController@postNewMessage');
 
 //Маршруты постов
 Route::resource('post', 'PostController');
