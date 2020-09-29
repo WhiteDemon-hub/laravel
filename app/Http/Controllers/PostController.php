@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Session;
 use App\Post;
 use App\Like;
@@ -72,6 +73,23 @@ class PostController extends Controller
         }
         else
             return null;
+    }
+
+    public function getUserPost(Request $request)
+    {
+        $post_user = Post::where('id', '1')->with('comments')->with('like')->with('comment_like')->get();
+
+        // $post_user = DB::table('posts')
+        //     ->select('posts.*')
+        //     ->select('comments.*')
+        //     ->join('comments', 'comments.post_id', '=', 'posts.id')
+        //     ->where('posts.user_id', '=', '1')
+            // ->get();
+
+        
+        return response() -> json([
+            'post_user' => $post_user,
+        ]);
     }
 
     /**

@@ -31,6 +31,7 @@ Route::post('history-new-message', 'MessagesController@postNewMessage');
 //Маршруты постов
 Route::resource('post', 'PostController');
 Route::post('post-like', 'PostController@postLike');
+Route::get('post-user', 'PostController@getUserPost');
 
 //Маршруты комментариев
 Route::resource('comment', 'CommentController');
