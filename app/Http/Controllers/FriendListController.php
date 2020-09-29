@@ -16,10 +16,11 @@ class FriendListController extends Controller
      */
     public function index()
     {
-        // return response() ->json([
-        //     'friendlist'
-        // ]);
+        return response() ->json([
+            'friendlist' => Friend_list::latest()->get()
+        ]);
     }
+    
 
     /**
      * Display a listing of the resource.
@@ -31,18 +32,18 @@ class FriendListController extends Controller
         if(Session::has('id'))
         {
             $friendLeft = DB::table('friend_lists')
-                ->select('friend_lists.status')
+                ->select('friend_lists.*')
                 ->where([['friend_lists.user_id_from', '=', Session::get('id')],
                 ['friend_lists.status', '=', '1']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_to')
                 ->get();
             $friendRight = DB::table('friend_lists')
-                ->select('friend_lists.status')
+                ->select('friend_lists.*')
                 ->where([['friend_lists.user_id_to', '=', Session::get('id')],
                 ['friend_lists.status', '=', '1']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_from')
                 ->get();
-            $FL = $friendLeft->union($friendRight);
+            $FL = $friendLeft->merge($friendRight);
         
             return $FL;
         }
@@ -69,7 +70,22 @@ class FriendListController extends Controller
             return $FL;
     }
 
-    public function 
+    public function getResponseFriend()
+    {
+        if(Session::has('id'))
+        {
+            $FL = DB::table('friend_lists')
+                ->select('friend_lists.*')
+                ->where([['friend_lists.user_id_to', '=', Session::get('id')],
+                ['friend_lists.status', '=', '0']])
+                ->join('users', 'users.id', '=', 'friend_lists.user_id_from')
+                ->get();
+
+            return $FL;
+        }
+        else
+            return null;
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -78,7 +94,7 @@ class FriendListController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -89,7 +105,16 @@ class FriendListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Session::get('id'))
+        {
+            $record = new Friend_list;
+            $record->user_id_from = Seesion::get('id');
+            $record->user_id_to = $request->id;
+            $record->status = '0';
+            $record->save();
+        }
+        else    
+            return null;
     }
 
     /**

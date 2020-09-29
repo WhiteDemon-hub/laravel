@@ -38,3 +38,4 @@ Route::post('comment-like', 'CommentController@postLike');
 Route::resource('friendlist', 'FriendListController');
 Route::get('friend-user', 'FriendListController@getUserFriend');
 Route::get('friend-this-user', 'FriendListController@getFriend');
+Route::get('response-friend', 'FriendListController@getResponseFriend');
