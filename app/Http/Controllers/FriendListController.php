@@ -148,7 +148,8 @@ class FriendListController extends Controller
      */
     public function update(Request $request, Friend_list $friend_list)
     {
-        //
+        $friend_list = $request;
+        $friend_list->save();
     }
 
     /**
