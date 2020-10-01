@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Admin;
 use Illuminate\Http\Request;
+use Crypt;
 
 class AdminController extends Controller
 {
@@ -27,6 +28,11 @@ class AdminController extends Controller
         //
     }
 
+    public function getQuit()
+    {
+        Session::flush();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -35,7 +41,15 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $admin = Admin::where('login', $request->login)->first();
+        if($admin[0]->password) == decrypt($request->password))
+        {
+            Session::put('id_admin', $user[0]->id);
+            // return response() -> json([
+            //     'user' => $user, 200
+            // ]);
+            return view('admin_panel', ['admin' => $admin]);
+        }
     }
 
     /**

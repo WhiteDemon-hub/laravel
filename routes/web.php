@@ -45,3 +45,7 @@ Route::resource('friendlist', 'FriendListController');
 Route::get('friend-user', 'FriendListController@getUserFriend');
 Route::get('friend-this-user', 'FriendListController@getFriend');
 Route::get('response-friend', 'FriendListController@getResponseFriend');
+
+//Маршруты админа
+Route::resource('admin', 'AdminController');
+Route::get('admin', 'AdminController@getQuit');

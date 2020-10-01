@@ -62,7 +62,7 @@ class UserController extends Controller
 
             $user->save();
             return response() -> json([
-                'user' => $user->get(), 200
+                'user' => $user, 200
             ]);
         }
         else
@@ -95,8 +95,8 @@ class UserController extends Controller
 
     public function postAuth(Request $request)
     {
-        $user = User::where('email', $request->email)->get();
-        if(md5($user[0]->password) == md5($request->password))
+        $user = User::where('email', $request->email)->first();
+        if(md5($user->password) == md5($request->password))
         {
             Session::put('id', $user[0]->id);
             // return response() -> json([
@@ -146,6 +146,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $user->id = $request->id;
         $user->name = $request->name;
         $user->Surname = $request->Surname;
         $user->Middlename = $request->Middlename;
@@ -155,7 +156,7 @@ class UserController extends Controller
 
         $user->save();
         return response() -> json([
-            'user' => $user->get(), 200
+            'user' => $user, 200
         ]);
     }
 

@@ -49,6 +49,10 @@ class CommentController extends Controller
             $comment->post_id = $request->post_id;
             $comment->post_id = '0';
             $comment->save();
+
+            return response() -> json([
+                'comment' => $comment
+            ])
         }
         else
         return null;
@@ -87,7 +91,7 @@ class CommentController extends Controller
         }
         else
         {
-            $comments = Comment::where('post_id', $request->id)->get();
+            $comments = Comment::where('post_id', $request->id);
         }
 
         return response() -> json(['comments' => $comments, 200]);

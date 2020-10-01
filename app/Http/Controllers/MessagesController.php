@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use App\Messages;
 use Illuminate\Http\Request;
+use Crypt;
 
 class MessagesController extends Controller
 {
@@ -15,9 +16,21 @@ class MessagesController extends Controller
      */
     public function index()
     {
+        // $text = encrypt("text");
+        // return decrypt($text);
         return response() -> json([
             'messages' => Messages::latest()->get()
         ]);
+        // $message_left = Messages::where([['user_id_from', '=', 1], ['user_id_to', '=', 4]]);
+        //     $message_right = Messages::where([['user_id_from', '=', 4], ['user_id_to', '=', 1]]);
+        //     $history = $message_left->union($message_right)->orderBy('id')->get();
+        //     for($i = 0; $i < $history->count(); $i++)
+        //     {
+        //         $history[$i]->content = decrypt($history[$i]->content);
+        //     }
+        //     return response() -> json([
+        //         'history' => $history,
+        //     ]); 
     }
 
     /**
@@ -36,10 +49,13 @@ class MessagesController extends Controller
         {
             $message_left = Messages::where([['user_id_from', '=', Session::get('id')], ['user_id_to', '=', $request->id]]);
             $message_right = Messages::where([['user_id_from', '=', $request->id], ['user_id_to', '=', Session::get('id')]]);
-            $history = $message_left->union($message_right)->orderBy('id')->get();
-
+            $history = $message_left->union($message_right)->orderBy('id');
+            for($i = 0; $i < $history->count(); $i++)
+            {
+                $history[$i]->content = decrypt($history[$i]->content);
+            }
             return response() -> json([
-                'history' => $history,
+                'history' => decrypt($history),
             ]); 
         }
     }
@@ -62,10 +78,10 @@ class MessagesController extends Controller
             $message = new Messages;
             $message->user_id_from = Session::get('id');
             $message->user_id_to = $request->id;
-            $message->content = $request->content;
+            $message->content = encrypt($request->content);
             $message->save();
             return response() -> json([
-                'message' => $message->get(),
+                'message' => $message,
             ]);
         }
         return null;
