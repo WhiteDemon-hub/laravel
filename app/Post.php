@@ -12,10 +12,15 @@ class Post extends Model
         return $this->hasMany(\App\Comment::class,'post_id');
     }
 
-    public function like()
-    {
-        return $this->hasMany(\App\Like::class, 'post_id');
-    }
+    // public function like()
+    // {
+    //     return $this->hasMany(\App\Like::class, 'post_id');
+    // }
+
+    // public function like_this_user()
+    // {
+    //     return $this->belongsToMany(Like::class, 'test')->withPivot('is_like');
+    // }
 
     // public function like_or_not()
     // {

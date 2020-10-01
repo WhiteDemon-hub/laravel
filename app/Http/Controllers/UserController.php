@@ -84,9 +84,10 @@ class UserController extends Controller
 
             $user->save();
             Session::put('id', $user->id);
-            return response() -> json([
-                'user' => $user->get(), 200
-            ]);
+            // return response() -> json([
+            //     'user' => $user->get(), 200
+            // ]);
+            return view('profil', ['user' => $user]);
         }
         else
             return "Пользователь с таким email уже зарегестрирован";
@@ -98,10 +99,18 @@ class UserController extends Controller
         if(md5($user[0]->password) == md5($request->password))
         {
             Session::put('id', $user[0]->id);
-            return response() -> json([
-                'user' => $user, 200
-            ]);
+            // return response() -> json([
+            //     'user' => $user, 200
+            // ]);
+            return view('profil', ['user' => $user]);
         }
+    }
+
+    public function postUserFromPostOrComment(Request $request)
+    {
+        return response() -> json([
+            'user' => User::where('id', '1')->first(), 200
+        ]);
     }
 
 
@@ -111,9 +120,10 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        // return redirect('profile/{'+ $id +'}')
+        return view('profile/{'.$id.'}', ['user' => User::findOrFail($id)]);
     }
 
     /**

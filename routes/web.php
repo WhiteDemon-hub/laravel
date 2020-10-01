@@ -20,7 +20,9 @@ Route::get('/', function () {
 //Маршруты users
 Route::resource('user', 'UserController');
 Route::get('quit', 'UserController@getQuit');
-Route::resource('user-register', 'UserController@postRegister');
+Route::post('user-register', 'UserController@postRegister');
+Route::post('user-from-post-or-comment', 'UserController@postUserFromPostOrComment');
+Route::post('user-auth', 'UserController@postAuth');
 
 
 //Маршруты сообщении
@@ -36,6 +38,7 @@ Route::get('post-user', 'PostController@getUserPost');
 //Маршруты комментариев
 Route::resource('comment', 'CommentController');
 Route::post('comment-like', 'CommentController@postLike');
+Route::get('comment-post', 'CommentController@getCommentofPost');
 
 //Маршруты френд листа
 Route::resource('friendlist', 'FriendListController');

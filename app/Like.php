@@ -11,6 +11,12 @@ class Like extends Model
      *
      * @var array
      */
+
+    public function relativePost()
+    {
+        return $this -> hasOne(\App\Post::class);
+    }
+
     protected $fillable = [
         'user_id', 'post_id', 
     ];

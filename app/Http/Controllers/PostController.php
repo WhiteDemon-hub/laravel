@@ -60,7 +60,7 @@ class PostController extends Controller
     {
         if(Session::has('id'))
         {
-            $post = Post::where('id', $request->post_id)->get()[0];
+            $post = Post::where('id', $request->post_id)->first();
             $like = new Like;
             $like->user_id = Session::get('id');
             $like->post_id = $post->id;
@@ -75,9 +75,20 @@ class PostController extends Controller
             return null;
     }
 
+    // public function getFriendUserPost()
+    // {
+    //     $user_friend_post = Post::where()
+    // }
+
     public function getUserPost(Request $request)
     {
-        $post_user = Post::where('id', '1')->with('comments')->with('like')->with('comment_like')->get();
+        // $post_user = Post::where('id', '1')
+        // ->with('comments')
+        // ->
+        // ->get();
+
+        // $post_user = DB::table('posts')
+        //     ->select('posts.*')
 
         // $post_user = DB::table('posts')
         //     ->select('posts.*')
@@ -86,9 +97,56 @@ class PostController extends Controller
         //     ->where('posts.user_id', '=', '1')
             // ->get();
 
+        // $post_user = DB::select(DB::raw("SELECT posts.*, CASE
+        // WHEN (SELECT COUNT(id) FROM likes WHERE user_id = '1' AND posts.id = post_id) = 1
+        // THEN 1
+        // ELSE 0
+        // END AS is_like
+        // FROM posts WHERE user_id = 1"));
+
+        // $comment = DB::select(DB::raw("SELECT comments.*, CASE
+        // WHEN (SELECT COUNT(id) FROM comments_likes WHERE comments.id = comment_id) = 1
+        // THEN 1
+        // ELSE 0
+        // END AS is_like
+        // FROM comments"));
+
+        // for($i = 0; $i < count($post_user);$i++)
+        // {
+        //     print_r($post_user[$i]);
+        //     for($j = 0; $j < count($comment);$j++)
+        //     {
+        //         // if($post_user->id == $comment->post_id)
+        //         // {
+        //         //     $post_user[$i] = array($post_user[$i], $comment[$j]);
+        //         // }
+        //     }
+        // }
         
+        // return response() -> json([
+        //     'post_user' => $post_user,
+        //     'comments' => $comment
+        // ]);
+
+        // print_r($post_user->get());
+        // echo '<br/>';
+        // print_r($comment->get());
+        $post_user;
+        if(Session::has("id"))
+        {
+            $post_user = DB::select(DB::raw("SELECT posts.*, CASE
+            WHEN (SELECT COUNT(id) FROM likes WHERE user_id = '1' AND posts.id = ".Session::get('id').") = 1
+            THEN 1
+            ELSE 0
+            END AS is_like
+            FROM posts WHERE user_id = ".$request->id));
+        }
+        else
+        {
+            $post_user = Post::where('user_id', $request->id)->get();
+        }
         return response() -> json([
-            'post_user' => $post_user,
+            'post' => $post_user, 200
         ]);
     }
 

@@ -58,7 +58,7 @@ class CommentController extends Controller
     {
         if(Session::has('id'))
         {
-            $comment = Comment::where('id', $request->comment_id)->get()[0];
+            $comment = Comment::where('id', $request->comment_id)->first();
             $like = new Comments_like;
             $like->user_id = Session::get('id');
             $like->comment_id = $comment->id;
@@ -71,6 +71,28 @@ class CommentController extends Controller
         }
         else
             return null;
+    }
+
+    public function getCommentofPost(Request $request)
+    {
+        $comments;
+        if(Session::has("id"))
+        {
+            $comments = DB::select(DB::raw("SELECT comments.*, CASE
+            WHEN (SELECT COUNT(id) FROM comments_likes WHERE comments.id = comment_id) = ".Session::get("id")."
+            THEN 1
+            ELSE 0
+            END AS is_like
+            FROM comments WHERE post_id = ".$request->id));
+        }
+        else
+        {
+            $comments = Comment::where('post_id', $request->id)->get();
+        }
+
+        return response() -> json(['comments' => $comments, 200]);
+            
+
     }
 
     /**
