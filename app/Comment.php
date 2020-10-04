@@ -11,9 +11,14 @@ class Comment extends Model
      *
      * @var array
      */
-    public function comment_like()
+    public function comments_like()
     {
         return $this->hasMany(\App\Comments_like::class,'comment_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(\App\User::class, 'user_id')->select(['id', 'name', 'Surname', 'Photo']);
     }
 
     protected $fillable = [

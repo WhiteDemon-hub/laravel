@@ -1,0 +1,135 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);@font-face {
+  font-family: "Roboto";
+  src: url("https://fonts.googleapis.com/css?family=Roboto");
+}
+
+.auth-menu,
+#footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.btn_std {
+  width: 160px;
+  padding: 5px 10px;
+  border: white solid 1px;
+  color: white;
+  background: #e4485ddd;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.btn_std:hover {
+  border: #e4485ddd solid 1px;
+  color: #e4485ddd;
+  background: white;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto";
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#main {
+  flex: 1 0 auto;
+  position: relative;
+}
+
+#header {
+  flex: 0 0 auto;
+  height: 100px;
+}
+
+#footer {
+  flex: 0 0 auto;
+  height: 40px;
+  padding: 10px;
+  margin-top: 10px;
+  background: #4b98e0dd;
+  color: white;
+}
+
+input[type=radio],
+input[type=file] {
+  display: none;
+}
+
+.auth-menu {
+  display: none;
+}
+
+.auth-warrper {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.auth-menu {
+  max-width: 400px;
+}
+
+#auth-menu-1:checked ~ .auth,
+#auth-menu-2:checked ~ .reg {
+  display: flex;
+  margin: auto;
+}
+
+.auth-menu {
+  box-shadow: 0 0 10px black;
+  background: #dfdbdb;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+form > * {
+  margin: 5px;
+}
+
+.btn_std {
+  width: 160px;
+}
+
+input[type=text],
+input[type=password] {
+  padding: 3px 5px;
+  border-radius: 3px;
+}
+
+.error {
+  background: #ce6c6c;
+  color: white;
+  border-radius: 3px;
+  padding: 5px 10px;
+}
+
+.select_photo {
+  background: whitesmoke;
+  border: solid 1px violet;
+  border-radius: 40px;
+  width: 200px;
+  height: 200px;
+}
+
+.select_photo > img {
+  max-width: 200px;
+  max-height: 200px;
+}
+

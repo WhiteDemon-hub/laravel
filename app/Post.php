@@ -12,6 +12,11 @@ class Post extends Model
         return $this->hasMany(\App\Comment::class,'post_id');
     }
 
+    public function users()
+    {
+        return $this->belongsTo(\App\User::class, 'user_id')->select(['id', 'name', 'Surname', 'Photo']);
+    }
+
     // public function like()
     // {
     //     return $this->hasMany(\App\Like::class, 'post_id');

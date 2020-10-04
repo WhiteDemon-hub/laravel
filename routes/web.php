@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 //Маршруты users
 Route::resource('user', 'UserController');
@@ -49,3 +49,12 @@ Route::get('response-friend', 'FriendListController@getResponseFriend');
 //Маршруты админа
 Route::resource('admin', 'AdminController');
 Route::get('admin', 'AdminController@getQuit');
+
+//Маршруты панели администратора
+Route::get('admin_panel', 'AdminNavigateController@index');
+
+//Навигация
+Route::get("/", 'NavigateController@index');
+Route::get("/auth", 'NavigateController@auth');
+Route::get("/profile/{user}", 'NavigateController@show');
+

@@ -11,6 +11,16 @@ class User extends Model
      *
      * @var array
      */
+    public function post()
+    {
+        return $this->hasMany(\App\Post::class, "user_id");
+    }
+
+    public function comment()
+    {
+        return $this->hasMany(\App\Comment::class, "user_id");
+    }
+
     protected $fillable = [
         'name', 'Surname', 'Middlename', 'Photo', 'email', 'password'
     ];

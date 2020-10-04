@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use App\User;
 use Illuminate\Http\Request;
+use Storage;
 
 class UserController extends Controller
 {
@@ -39,7 +40,13 @@ class UserController extends Controller
 
     public function getQuit()
     {
+        Session::forget('id');
         Session::flush();
+        session_unset();
+        if(Session::has("id"))
+            return response() -> json(['message' => Session::get("id")]); 
+        else 
+            return response() -> json(['message' => 'none']); 
     }
 
     /**
@@ -72,37 +79,57 @@ class UserController extends Controller
 
     public function postRegister(Request $request)
     {
-        if(User::where('email', $request->email)->count() == 0)
+        if(User::where('email', $_POST['email'])->count() == 0)
         {
-            $user = new User;
-            $user->name = $request->name;
-            $user->Surname = $request->Surname;
-            $user->Middlename = $request->Middlename;
-            $user->Photo = $request->Photo;
-            $user->email = $request->email;
-            $user->password = md5($request->password);
+            if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+            {
+                $path="noooo";
+                $user = new User;
+                $user->name = $_POST['name'];
+                $user->Surname = $_POST['Surname'];
+                $user->Middlename = $_POST['middenaem'];
+                // if($_FILES['Photo']['tmp_name'] == UPLOAD_ERR_OR)
+                // $path = "yess";
+                if(isset($_FILES['image']["tmp_name"]))
+                {
+                    // $_FILES['image']->move(storage_path('images'), time().'_'.$_FILES['image']["tmp_name"]->getClientOriginalName());
+                    // $path = $request->file('avatar')->$_FILES['image']["tmp_name"];
+                    //move_uploaded_file($_FILES['image']['tmp_name'], $_SERVER['DOCUMENT_ROOT']."//img//".$_FILES['image']['name']);
+                }
+                // $file = $request->file('Photo');
+                // $path = $request->file('Photo')->store('img', 'public');
 
-            $user->save();
-            Session::put('id', $user->id);
-            // return response() -> json([
-            //     'user' => $user->get(), 200
-            // ]);
-            return view('profil', ['user' => $user]);
+                $path = $request->file('image')->store('img', 'public');
+                $user->Photo = $path;
+                $user->email = $_POST['email'];
+                $user->password = md5($_POST['password']);
+                $user->save();
+                Session::put('id', $user->id);
+                return redirect('/');
+            }
+            else
+                return response() ->  json(['message' => "Некорректный email"]);
         }
         else
-            return "Пользователь с таким email уже зарегестрирован";
+            return response() ->  json(['message' => "Пользователь с таким email уже зарегестрирован"]);
     }
 
     public function postAuth(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-        if(md5($user->password) == md5($request->password))
+        if($user->password == md5($request->password))
         {
-            Session::put('id', $user[0]->id);
+            Session::put('id', $user->id);
             // return response() -> json([
             //     'user' => $user, 200
             // ]);
-            return view('profil', ['user' => $user]);
+            return response() ->  json(['message' => '1']);
+            // return redirect("/");
+        }
+        else
+        {
+            return response() ->  json(['message' => "Неверный email или пароль"]);
+            // return response() ->  json(['message' => $user->email]);
         }
     }
 

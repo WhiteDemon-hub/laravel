@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+$color_greay: rgb(223, 219, 219);
+$color_blue: #4b98e0dd;
+$color_red: #e4485ddd;
+$color_purpure: #564da3dd;
+$error_red: rgb(206, 108, 108);
+
+$font-family-sans-serif: 'Roboto', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+@font-face
+{
+    font-family: 'Roboto';
+    src: url('https://fonts.googleapis.com/css?family=Roboto');
+}
+
+%flex-pareant-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+%flex-pareant-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+%btn-h {
+    width: 160px;
+    padding: 5px 10px;
+    border: white solid 1px;
+    color: white;
+    background: $color_red;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+%btn-h-h {
+    border: $color_red solid 1px;
+    color: $color_red;
+    background: white;
+}
+
+//Обшие настройки страницы
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto';
+}
+
+#app {
+    display: flex;
+	flex-direction: column;
+    min-height: 100vh;
+}
+
+#main {
+    flex: 1 0 auto;
+    position: relative;
+}
+
+#header
+{
+    flex: 0 0 auto;
+    height: 100px;
+}
+
+#footer
+{
+    @extend %flex-pareant-col;
+    flex: 0 0 auto;
+    height: 40px;
+    padding: 10px;
+    margin-top: 10px;
+    background: $color_blue;
+    color: white;
+}
+
+//Меню аунтификации
+input[type="radio"], input[type="file"]
+{
+    display: none;
+}
+
+.auth-menu
+{
+    display: none;
+}
+
+
+
+.auth-warrper
+{
+
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+}
+
+.auth-menu
+{
+    max-width: 400px;
+    @extend %flex-pareant-col;
+    
+}
+
+#auth-menu-1:checked ~ .auth,
+#auth-menu-2:checked ~ .reg
+{
+    display: flex;
+    margin: auto;
+}
+
+.auth-menu
+{
+    box-shadow: 0 0 10px black;
+    background: $color_greay;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+form > *
+{
+    margin: 5px;
+}
+
+.btn_std
+{
+    @extend %btn-h;
+    width: 160px;
+}
+
+.btn_std:hover 
+{
+    @extend %btn-h-h;
+}
+
+input[type="text"], input[type="password"]
+{
+    padding: 3px 5px;
+    border-radius: 3px;
+}
+
+.error
+{
+    background: $error_red;
+    color: white;
+    border-radius: 3px;
+    padding: 5px 10px;
+}
+
+.select_photo
+{
+    background: whitesmoke;
+    border: solid 1px violet;
+    border-radius: 40px;
+    width: 200px;
+    height: 200px;
+}
+
+
+.select_photo > img {
+    // border-radius: 40px;
+    max-width: 200px;
+    max-height: 200px;
+}
+
