@@ -29,14 +29,44 @@ export default {
             else
             commit('Erorr', message)
         },
-        async Quit()
+        Quit()
         {   
-            let a =
-            axios
-            .get("quit")
+            window.location = "/quit"
+        },
+        User({commit}, data)
+        {
+            commit('LoadUser', data);
+        },
+        async SessionId({commit})
+        {
+            await axios
+            .get('/user-session')
             .then(
-                window.location = "/"
+                response =>
+                {
+                    commit("LoadSession", response.data)
+                }
             )
+        },
+        async AddFriend({commit}, data)
+        {
+            let b = await axios
+            .post('/friendlist', data)
+            commit("SendFriend", b.data)
+        },
+        async FriendInfo({commit}, data)
+        {
+            let b = await axios
+            .post('/info-friend', data)
+            commit("Finfo", b.data)
+            console.log(b);
+        },
+        async FriendDelete({commit}, data)
+        {
+            let a =
+            await axios
+            .delete('/friendlist/'+data.id)
+            commit("Finfo", '2')
             console.log(a);
         }
     },
@@ -44,17 +74,49 @@ export default {
         Erorr(state, data)
         {
             state.message = data.data.message;
+        },
+        LoadUser(state, data)
+        {
+            state.user = data;
+        },
+        LoadSession(state, data)
+        {
+            state.session_id = data;
+        },
+        SendFriend(state, data)
+        {
+            if(data==true)
+                state.IsFriend = 0
+        },
+        Finfo(state, data)
+        {
+            state.IsFriend = data;
         }
     },
     state:
     {
-        message: ''
+        message: '',
+        user: [],
+        session_id: '',
+        IsFriend: 2
     },
     getters:
     {
         GetMessage(state)
         {
             return state.message;
+        },
+        GetUser(state)
+        {
+            return state.user;
+        },
+        GetSessionId(state)
+        {
+            return state.session_id
+        },
+        GetFriendInfo(state)
+        {
+            return state.IsFriend;
         }
     }
 }

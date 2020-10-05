@@ -40,13 +40,8 @@ class UserController extends Controller
 
     public function getQuit()
     {
-        Session::forget('id');
         Session::flush();
-        session_unset();
-        if(Session::has("id"))
-            return response() -> json(['message' => Session::get("id")]); 
-        else 
-            return response() -> json(['message' => 'none']); 
+        return redirect('/');
     }
 
     /**
@@ -138,6 +133,14 @@ class UserController extends Controller
         return response() -> json([
             'user' => User::where('id', '1')->first(), 200
         ]);
+    }
+
+    public function getSessionId()
+    {
+        if(Session::has('id'))
+            return Session::get('id');
+        else
+            return 0;
     }
 
 

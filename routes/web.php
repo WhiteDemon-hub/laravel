@@ -23,6 +23,7 @@ Route::get('quit', 'UserController@getQuit');
 Route::post('user-register', 'UserController@postRegister');
 Route::post('user-from-post-or-comment', 'UserController@postUserFromPostOrComment');
 Route::post('user-auth', 'UserController@postAuth');
+Route::get('user-session', 'UserController@getSessionId');
 
 
 //Маршруты сообщении
@@ -45,7 +46,7 @@ Route::resource('friendlist', 'FriendListController');
 Route::get('friend-user', 'FriendListController@getUserFriend');
 Route::get('friend-this-user', 'FriendListController@getFriend');
 Route::get('response-friend', 'FriendListController@getResponseFriend');
-
+Route::post('info-friend', 'FriendListController@postFriendInfo');
 //Маршруты админа
 Route::resource('admin', 'AdminController');
 Route::get('admin', 'AdminController@getQuit');

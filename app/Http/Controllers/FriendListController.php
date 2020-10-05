@@ -111,16 +111,41 @@ class FriendListController extends Controller
      */
     public function store(Request $request)
     {
-        if(Session::get('id'))
+        if(Session::get('id') &&
+         Friend_list::where([['user_id_from', Session::get('id')], ['user_id_to', $request->id]])->count() <= 0)
         {
             $record = new Friend_list;
-            $record->user_id_from = Seesion::get('id');
+            $record->user_id_from = Session::get('id');
             $record->user_id_to = $request->id;
             $record->status = '0';
             $record->save();
+            return true;
         }
         else    
-            return null;
+            return false;
+    }
+
+    public function postFriendInfo(Request $request)
+    {
+        if(Session::get('id'))
+        {
+            if(Friend_list::where([['user_id_from', Session::get('id')], ['user_id_to', $request->id]])->count() === 0 &&
+            Friend_list::where([['user_id_from', $request->id], ['user_id_to', Session::get('id')]])->count() === 0 )
+            {
+                 return 2;
+            }
+            else if(Friend_list::where([['user_id_from', Session::get('id')], ['user_id_to', $request->id], ['status', '0']])->count() == 1 ||
+            Friend_list::where([['user_id_from', $request->id], ['user_id_to', Session::get('id')], ['status', '0']])->count() == 1)
+            {
+                return 0;
+            }
+            else if(Friend_list::where([['user_id_from', Session::get('id')], ['user_id_to', $request->id], ['status', '1']])->count() == 1 ||
+            Friend_list::where([['user_id_from', $request->id], ['user_id_to', Session::get('id')], ['status', '1']])->count()  == 1)
+            {
+                return 1;
+            }
+        }
+        return null;
     }
 
     /**
@@ -164,8 +189,9 @@ class FriendListController extends Controller
      * @param  \App\Friend_list  $friend_list
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Friend_list $friend_list)
+    public function destroy($id)
     {
-        $friend_list->delete();
+        Friend_list::where([['user_id_from', Session::get('id')], ['user_id_to', $id]])->delete();
+        Friend_list::where([['user_id_from', $id], ['user_id_to', Session::get('id')]])->delete();
     }
 }

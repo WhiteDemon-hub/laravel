@@ -12,7 +12,7 @@ class NavigateController extends Controller
     {
         if(Session::has('id'))
         {
-            return redirect('/profile/{'.Session::get('id').'}');
+            return redirect('/profile'.'/'.Session::get('id'));
         }
         else
         {
@@ -31,6 +31,6 @@ class NavigateController extends Controller
 
     public function show($id)
     {
-        return view('/profile', compact(User::find($id)));
+        return view('/profile', ['user' => User::find($id)]);
     }
 }

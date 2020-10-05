@@ -5,8 +5,8 @@
         <div></div>
             <form class="auth-menu reg" @submit.prevent="Auth">
                 <h2>Войти</h2>
-                <input type="text" v-model="email_auth" placeholder="Email" >
-                <input type="password" v-model="password_auth" placeholder="Пароль">
+                <input type="text" v-model="email_auth" placeholder="Email" required>
+                <input type="password" v-model="password_auth" placeholder="Пароль" required>
                 <button type="submit" class="btn_std">Войти</button>
                 <label class="btn_std" for="auth-menu-1">Регистрация</label>
                 <div class="error" v-if="!Passwords_do_not">Неверный пароль</div>
@@ -15,17 +15,17 @@
             </form>
             <form class="auth-menu auth" @submit.prevent="Register">
                 <h2>Регистрация</h2>
-                <input type="text" v-model="name" placeholder="Имя" >
-                <input type="text" v-model="surname" placeholder="Фамилия" >
-                <input type="text" v-model="middenaem" placeholder="Отчество">
-                <input type="text" v-model="email_reg" placeholder="Email">
-                <input type="password" v-model="password" placeholder="Пароль">
-                <input type="password" v-model="password_repid" placeholder="Повторите пароль">
+                <input type="text" v-model="name" placeholder="Имя" required>
+                <input type="text" v-model="surname" placeholder="Фамилия" required>
+                <input type="text" v-model="middenaem" placeholder="Отчество" required>
+                <input type="text" v-model="email_reg" placeholder="Email" required>
+                <input type="password" v-model="password" placeholder="Пароль" required>
+                <input type="password" v-model="password_repid" placeholder="Повторите пароль" required>
                 <div class="select_photo">
                     <img id="img" :src="avatar">
                 </div>
                 <label for="imgInput" class="btn_std"><i class="fa fa-cloud-upload"></i>Выберете файл</label>
-                <input class="photo" @change="onPhotoChange" accept="image/png" type="file" name="file" ref="file" id="imgInput"/>
+                <input class="photo" @change="onPhotoChange" accept="image/png" type="file" name="file" ref="file" id="imgInput" required/>
                 
                 <button type="submit" class="btn_std">Зарегистрироватся</button>
                 <label for="auth-menu-2" class="btn_std">Вход</label>

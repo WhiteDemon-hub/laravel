@@ -45,14 +45,16 @@ class CommentController extends Controller
         {
             $comment = new Comment;
             $comment->post_id = $request->post_id;
-            $comment->post_id = $request->post_id;
-            $comment->post_id = $request->post_id;
-            $comment->post_id = '0';
+            $comment->content = $request->content;
+            $comment->user_id = $request->user_id;
+            $comment->likes = '0';
             $comment->save();
 
+            $newcomment = Comment::where('id', $comment->id)->with('users')->first();
+            $newcomment->is_like='0';
             return response() -> json([
-                'comment' => $comment
-            ])
+                'comment' => $newcomment
+            ]);
         }
         else
         return null;
@@ -63,15 +65,23 @@ class CommentController extends Controller
         if(Session::has('id'))
         {
             $comment = Comment::where('id', $request->comment_id)->first();
-            $like = new Comments_like;
-            $like->user_id = Session::get('id');
-            $like->comment_id = $comment->id;
-            $like->save();
-            $comment->likes = intval($comment->likes)+1;
-            $comment->save();
-            return response() -> json([
-                'comment' => $comment
-            ]);
+            if($request->is_like==0 && Comments_like::where([['user_id', Session::get('id')], ['comment_id',  $comment->id]])->count()==0)
+            {
+                $like = new Comments_like;
+                $like->user_id = Session::get('id');
+                $like->comment_id = $comment->id;
+                $like->save();
+                $comment->likes = intval($comment->likes)+1;
+                $comment->save();
+                return null;
+            }
+            else
+            {
+                Comments_like::where([['user_id', Session::get('id')], ['comment_id',  $comment->id]])->delete();
+                $comment->likes = intval($comment->likes)-1;
+                $comment->save();
+                return null;
+            }
         }
         else
             return null;
