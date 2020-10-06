@@ -36,13 +36,13 @@ class FriendListController extends Controller
                 ->where([['friend_lists.user_id_from', '=', Session::get('id')],
                 ['friend_lists.status', '=', '1']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_to')
-                ->select('users.id', 'users.name', 'users.Surname', 'users.Photo');
+                ->select('friend_lists.*', 'users.id', 'users.name', 'users.Surname', 'users.Photo');
             $friendRight = DB::table('friend_lists')
                 ->select('*')
                 ->where([['friend_lists.user_id_to', '=', Session::get('id')],
                 ['friend_lists.status', '=', '1']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_from')
-                ->select('users.id', 'users.name', 'users.Surname', 'users.Photo');
+                ->select('friend_lists.*', 'users.id', 'users.name', 'users.Surname', 'users.Photo');
             $FL = $friendLeft->union($friendRight);
             return response() -> json([
                 'ThisUserFriend' => $FL->get(),
@@ -59,14 +59,14 @@ class FriendListController extends Controller
                 ->where([['friend_lists.user_id_from', '=', $request->id],
                 ['friend_lists.status', '=', '1']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_to')
-                ->select('users.id', 'users.name', 'users.Surname', 'users.Photo')
+                ->select('friend_lists.*', 'users.id', 'users.name', 'users.Surname', 'users.Photo')
                 ->get();
             $friendRight = DB::table('friend_lists')
                 ->select('*')
                 ->where([['friend_lists.user_id_to', '=', $request->id],
                 ['friend_lists.status', '=', '1']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_from')
-                ->select('users.id', 'users.name', 'users.Surname', 'users.Photo')
+                ->select('friend_lists.*', 'users.id', 'users.name', 'users.Surname', 'users.Photo')
                 ->get();
             $FL = $friendLeft->merge($friendRight);
         
@@ -84,7 +84,7 @@ class FriendListController extends Controller
                 ->where([['friend_lists.user_id_to', '=', Session::get('id')],
                 ['friend_lists.status', '=', '0']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_from')
-                ->select('users.id', 'users.name', 'users.Surname', 'users.Photo')
+                ->select('friend_lists.*', 'users.id', 'users.name', 'users.Surname', 'users.Photo')
                 ->get();
 
             return response() -> json([
