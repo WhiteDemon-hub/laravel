@@ -4,7 +4,7 @@ $color_blue: #4b98e0dd;
 $color_red: #e4485ddd;
 $color_purpure: #564da3dd;
 $error_red: rgb(206, 108, 108);
-$bg_blue: rgb(216, 216, 240);
+$bg_blue: rgb(159, 161, 163);
 $like: #e735a3dd;
 
 $font-family-sans-serif: 'Roboto', sans-serif;
@@ -24,6 +24,15 @@ $line-height-base: 1.6;
     align-content: center;
     align-items: center;
     text-align: center;
+}
+
+%contener-std {
+    width: 80%;
+    margin:  30px auto;
+    padding: 10px; 
+    border-radius: 5px;
+    border: solid 2px black;
+    box-shadow: 5px 5px 5px black;
 }
 
 %flex-pareant-row {
@@ -54,6 +63,10 @@ $line-height-base: 1.6;
 
 
 //Обшие настройки страницы
+.fa-heart:hover
+{
+    color: $color_red;
+}
 
 .btn_std_re
 {
@@ -130,7 +143,7 @@ textarea {
     border: none;
     border-radius: 20px;
     padding: 10px;
-    box-shadow: 0 0 10px white;
+    box-shadow: 0 0 10px $color_blue;
 }
 input[type="text"], input[type="password"], textarea
 {
@@ -251,14 +264,14 @@ form > *
     margin: auto;
 }
 .create-post {
-    width: 60%;
-    box-shadow: 0 0 10px $bg_blue;
+    width: 80%;
+    box-shadow: 10px 10px 10px black;
+    border: black 2px solid;
     margin: 10px;
     padding: 5px;
-    background: $bg_blue;
-    max-width: 500px;
-    min-width: 400px;
+    background: white;
     margin:  40px auto;
+    border-radius: 5px;
 }
 .create-post > form
 {
@@ -268,21 +281,20 @@ form > *
 .user-data
 {
     @extend %flex-pareant-row;
-    background: $bg_blue;
+    border-bottom: solid 1px black;
+    border-top: solid 1px black;
     border-radius: 5px;
     margin: 5px;
 }
 
 .post-item
 {
-    width: 60%;
+    width: 80%;
     margin:  30px auto;
     padding: 10px; 
-    background: $bg_blue;
     border-radius: 5px;
-    box-shadow: 0 0 5px $bg_blue;
-    max-width: 500px;
-    min-width: 400px;
+    border: solid 2px black;
+    box-shadow: 5px 5px 5px black;
 }
 
 .avater-warpper
@@ -309,7 +321,8 @@ form > *
     padding: 10px;
     background: white;
     border-radius: 5px;
-    box-shadow: 0 0 5px white;
+    border: solid 1px black;
+    box-shadow: 0 0 5px black;
 }
 
 .item-info
@@ -361,6 +374,7 @@ form > *
 {
     height: 40px;
     width: 80%;
+    margin: 0;
 }
 .item-info p  .red{
     color: $like;
@@ -415,30 +429,29 @@ form > *
 //User data
 .user-info
 {
-    background: $bg_blue;
     @extend %flex-pareant-col;
     flex-direction: column;
-    max-width: 500px;
-    width: 60%;
+    width: 80%;
     margin: auto;
-    padding: 10px;
+    padding-bottom: 10px;
     border-radius: 5px;
-    box-shadow: 0 0 5px $bg_blue;
+    box-shadow: 10px 10px 10px $bg_blue;
 }
 
 .head-avatar
 {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     background: white;
-    box-shadow: 0 0 10px white;
+    box-shadow: 0 0 10px $color_blue;
     border-radius: 5px;
+    margin: 0;
 }
 
 .head-avatar > img
 {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 200px;
+    max-height: 200px;
 }
 
 .user-info  p
@@ -453,12 +466,93 @@ form > *
 //     @extend %flex-pareant-row;
 // }
 
-// .user-content .menu
-// {
-//     width: 20%;
-//     justify-content: start;
-// }
+.menu
+{
+    margin:  10px auto;
+}
+.menu ul
+{
+    @extend %flex-pareant-row;
+    text-decoration: none;
+    width: 80%;
+    margin: auto;
+    justify-content: space-between;
+    max-width: 420px;
+    height: 30px;
+}
+.menu ul li
+{
+    text-decoration: none;
+    list-style-type: none;
+    width: 120px;
+    text-align: center;
+    background: black;
+    padding:  9px 9px;
+    border: solid $color_red 1px;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 0 #31302B;
+    transition: all ease-in-out 0.9s;
+    position: relative;
+}
+.menu ul li a{
+    color: white;
+}
+
+.menu ul li:hover{
+    box-shadow: inset 140px 0 0 0 $color_red;
+    border: inset black 1px;
+    color: $color_red;
+}
+
+.count
+{
+    @extend %flex-pareant-col;
+    border-radius: 50%;
+    // border: solid 1px black;
+    background: $color_red;
+    color: white;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    margin-top: -15px;
+    margin-left: 90px;
+    font-size: 12px;
+}
+
+.count *
+{
+    margin: auto;
+}
 // .user-content .content
 // {
 //     width: 80%;
 // }
+
+//Friend
+
+.friend, .friend-requests
+{
+    @extend %contener-std;
+    
+}
+
+.friend h2, .friend-requests h2
+{
+    text-align: center;
+    margin: 10px;
+}
+
+.friend-list-item
+{
+    @extend %flex-pareant-row;
+    margin-bottom: 10px;
+}
+
+.friend-info
+{
+    border-radius: 5px;
+    border: solid 1px black;
+    width: 80%;
+    padding: 10px;
+    
+}

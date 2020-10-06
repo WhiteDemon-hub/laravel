@@ -1,7 +1,7 @@
 @extends('layout.template')
 
 @section('title')
-    Вход
+    {{"Вход"}}
 @endsection
 
 @section('content')

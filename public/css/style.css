@@ -1,4 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto);.user-info,
+@import url(https://fonts.googleapis.com/css?family=Roboto);.count,
+.user-info,
 .create-post > form,
 .auth-menu,
 #footer,
@@ -11,6 +12,18 @@
   text-align: center;
 }
 
+.friend,
+.friend-requests {
+  width: 80%;
+  margin: 30px auto;
+  padding: 10px;
+  border-radius: 5px;
+  border: solid 2px black;
+  box-shadow: 5px 5px 5px black;
+}
+
+.friend-list-item,
+.menu ul,
 .create-comment form,
 .comment-item,
 .item-info,
@@ -39,6 +52,10 @@
   border: #e4485ddd solid 1px;
   color: #e4485ddd;
   background: white;
+}
+
+.fa-heart:hover {
+  color: #e4485ddd;
 }
 
 .btn_std_re {
@@ -104,7 +121,7 @@ textarea {
   border: none;
   border-radius: 20px;
   padding: 10px;
-  box-shadow: 0 0 10px white;
+  box-shadow: 0 0 10px #4b98e0dd;
 }
 
 input[type=text],
@@ -161,8 +178,8 @@ A:hover {
 }
 
 .auth-menu {
-  box-shadow: 0 0 10px #d8d8f0;
-  background: #d8d8f0;
+  box-shadow: 0 0 10px #9fa1a3;
+  background: #9fa1a3;
   margin: auto;
   position: absolute;
   top: 0;
@@ -205,31 +222,30 @@ form > * {
 }
 
 .create-post {
-  width: 60%;
-  box-shadow: 0 0 10px #d8d8f0;
+  width: 80%;
+  box-shadow: 10px 10px 10px black;
+  border: black 2px solid;
   margin: 10px;
   padding: 5px;
-  background: #d8d8f0;
-  max-width: 500px;
-  min-width: 400px;
+  background: white;
   margin: 40px auto;
+  border-radius: 5px;
 }
 
 .user-data {
-  background: #d8d8f0;
+  border-bottom: solid 1px black;
+  border-top: solid 1px black;
   border-radius: 5px;
   margin: 5px;
 }
 
 .post-item {
-  width: 60%;
+  width: 80%;
   margin: 30px auto;
   padding: 10px;
-  background: #d8d8f0;
   border-radius: 5px;
-  box-shadow: 0 0 5px #d8d8f0;
-  max-width: 500px;
-  min-width: 400px;
+  border: solid 2px black;
+  box-shadow: 5px 5px 5px black;
 }
 
 .avater-warpper {
@@ -254,7 +270,8 @@ form > * {
   padding: 10px;
   background: white;
   border-radius: 5px;
-  box-shadow: 0 0 5px white;
+  border: solid 1px black;
+  box-shadow: 0 0 5px black;
 }
 
 .item-info {
@@ -296,6 +313,7 @@ form > * {
 .create-comment form textarea {
   height: 40px;
   width: 80%;
+  margin: 0;
 }
 
 .item-info p .red {
@@ -344,31 +362,100 @@ form > * {
 }
 
 .user-info {
-  background: #d8d8f0;
   flex-direction: column;
-  max-width: 500px;
-  width: 60%;
+  width: 80%;
   margin: auto;
-  padding: 10px;
+  padding-bottom: 10px;
   border-radius: 5px;
-  box-shadow: 0 0 5px #d8d8f0;
+  box-shadow: 10px 10px 10px #9fa1a3;
 }
 
 .head-avatar {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   background: white;
-  box-shadow: 0 0 10px white;
+  box-shadow: 0 0 10px #4b98e0dd;
   border-radius: 5px;
+  margin: 0;
 }
 
 .head-avatar > img {
-  max-width: 300px;
-  max-height: 300px;
+  max-width: 200px;
+  max-height: 200px;
 }
 
 .user-info p {
   margin: 10px auto;
   font-weight: bold;
+}
+
+.menu {
+  margin: 10px auto;
+}
+
+.menu ul {
+  text-decoration: none;
+  width: 80%;
+  margin: auto;
+  justify-content: space-between;
+  max-width: 420px;
+  height: 30px;
+}
+
+.menu ul li {
+  text-decoration: none;
+  list-style-type: none;
+  width: 120px;
+  text-align: center;
+  background: black;
+  padding: 9px 9px;
+  border: solid #e4485ddd 1px;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 0 #31302B;
+  transition: all ease-in-out 0.9s;
+  position: relative;
+}
+
+.menu ul li a {
+  color: white;
+}
+
+.menu ul li:hover {
+  box-shadow: inset 140px 0 0 0 #e4485ddd;
+  border: inset black 1px;
+  color: #e4485ddd;
+}
+
+.count {
+  border-radius: 50%;
+  background: #e4485ddd;
+  color: white;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  margin-top: -15px;
+  margin-left: 90px;
+  font-size: 12px;
+}
+
+.count * {
+  margin: auto;
+}
+
+.friend h2,
+.friend-requests h2 {
+  text-align: center;
+  margin: 10px;
+}
+
+.friend-list-item {
+  margin-bottom: 10px;
+}
+
+.friend-info {
+  border-radius: 5px;
+  border: solid 1px black;
+  width: 80%;
+  padding: 10px;
 }
 

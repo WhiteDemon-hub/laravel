@@ -7,8 +7,8 @@
                 </div>
                 <a :href="'/profile/'+posts.users.id">{{posts.users.name+' '+posts.users.Surname}}</a>    
             </div>
-            <div class="post-content">
-                    {{posts.content}}
+            <div class="post-content" v-html="content_filter(posts.content)">
+                    
             </div>
             <div class="item-info">
                 <p><i class="fa fa-clock-o" aria-hidden="true"></i> {{posts.created_at | data}}</p>
@@ -23,7 +23,7 @@
                     <form @submit.prevent="NewComment">
                         <!-- <input type="hidden" name="post_id" v-model="post_id" :value="posts.id"> -->
                         <textarea name="" id="" cols="30" rows="10" placeholder="Прокоментировать это..." required v-model="content_comment"></textarea>
-                        <button type="submit" class="btn_min"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                        <button type="submit" class="btn_min" title="Добавить"><i class="fa fa-plus" aria-hidden="true"></i></button>
                     </form>
                 </div>
         </div>
@@ -71,11 +71,17 @@ export default {
         data: function (value) {
             value =  String(value);
             return value.substr(0, 10).replace(/-/g, ".")+" "+value.substr(11, 5);
-        } 
+        },
     },
     methods:{
         ...mapActions('user', ['User', 'SessionId']),
         ...mapActions('post', ['AllUserPosts', 'CreateComment', 'LikeOrDisLike']),
+        content_filter: function (val)
+        {
+            // var txt = document.createElement("textarea");
+            // txt.innerHTML = val;
+            return val.replace(/\n/g, "<br/>");
+        },
         NewComment()
         {
             if(this.Sid!=0)
@@ -87,6 +93,7 @@ export default {
                 }
 
                 this.CreateComment(Comment);
+                this.content_comment = '';
             }
             else
             {

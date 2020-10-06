@@ -32,21 +32,20 @@ class FriendListController extends Controller
         if(Session::has('id'))
         {
             $friendLeft = DB::table('friend_lists')
-                ->select('friend_lists.*')
+                ->select('*')
                 ->where([['friend_lists.user_id_from', '=', Session::get('id')],
                 ['friend_lists.status', '=', '1']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_to')
-                ->get();
+                ->select('users.id', 'users.name', 'users.Surname', 'users.Photo');
             $friendRight = DB::table('friend_lists')
-                ->select('friend_lists.*')
+                ->select('*')
                 ->where([['friend_lists.user_id_to', '=', Session::get('id')],
                 ['friend_lists.status', '=', '1']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_from')
-                ->get();
-            $FL = $friendLeft->merge($friendRight);
-        
+                ->select('users.id', 'users.name', 'users.Surname', 'users.Photo');
+            $FL = $friendLeft->union($friendRight);
             return response() -> json([
-                'ThisUserFriend' => $FL,
+                'ThisUserFriend' => $FL->get(),
             ]);
         }
         else
@@ -56,16 +55,18 @@ class FriendListController extends Controller
     public function getUserFriend(Request $request)
     {
             $friendLeft = DB::table('friend_lists')
-                ->select('friend_lists.*')
+                ->select('*')
                 ->where([['friend_lists.user_id_from', '=', $request->id],
                 ['friend_lists.status', '=', '1']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_to')
+                ->select('users.id', 'users.name', 'users.Surname', 'users.Photo')
                 ->get();
             $friendRight = DB::table('friend_lists')
-                ->select('friend_lists.*')
+                ->select('*')
                 ->where([['friend_lists.user_id_to', '=', $request->id],
                 ['friend_lists.status', '=', '1']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_from')
+                ->select('users.id', 'users.name', 'users.Surname', 'users.Photo')
                 ->get();
             $FL = $friendLeft->merge($friendRight);
         
@@ -79,14 +80,32 @@ class FriendListController extends Controller
         if(Session::has('id'))
         {
             $FL = DB::table('friend_lists')
-                ->select('friend_lists.*')
+                ->select('*')
                 ->where([['friend_lists.user_id_to', '=', Session::get('id')],
                 ['friend_lists.status', '=', '0']])
                 ->join('users', 'users.id', '=', 'friend_lists.user_id_from')
+                ->select('users.id', 'users.name', 'users.Surname', 'users.Photo')
                 ->get();
 
             return response() -> json([
                 'ResponseFriend' => $FL,
+            ]);
+        }
+        else
+            return null;
+    }
+
+    public function postFriendConfirm(Request $request)
+    {
+        if(Session::has('id'))
+        {
+            $record = new Friend_list;
+            $record = Friend_list::where([['user_id_from', $request->id], ['user_id_to', Session::get('id')]])->first();
+            $record->status = '1';
+            $record->save();
+            return response() -> json([
+                'id' => $request->id,
+                'status' => $record->status
             ]);
         }
         else
@@ -117,9 +136,15 @@ class FriendListController extends Controller
             $record = new Friend_list;
             $record->user_id_from = Session::get('id');
             $record->user_id_to = $request->id;
+            if($request->canceling==true)
+            $record->status = '1';
+            else
             $record->status = '0';
             $record->save();
-            return true;
+            return response()->json([
+                'id' => $request->id,
+                'status' => $record->status
+            ]);
         }
         else    
             return false;
@@ -193,5 +218,9 @@ class FriendListController extends Controller
     {
         Friend_list::where([['user_id_from', Session::get('id')], ['user_id_to', $id]])->delete();
         Friend_list::where([['user_id_from', $id], ['user_id_to', Session::get('id')]])->delete();
+        return response()->json([
+            'id' => $id,
+            'status' => '2'
+        ]);
     }
 }

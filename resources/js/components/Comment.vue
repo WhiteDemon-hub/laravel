@@ -7,8 +7,7 @@
                 <div class="user-data">
                     <a :href="'/profile/'+comment.users.id">{{comment.users.name+' '+comment.users.Surname}}</a>    
                 </div>
-                <div class="comment-content">
-                    {{comment.content}}
+                <div class="comment-content" v-html="content_filter(comment.content)">
                 </div>
                 <div class="item-info">
                     <p><i class="fa fa-clock-o" aria-hidden="true"></i> {{comment.created_at | data}}</p>
@@ -50,6 +49,10 @@ export default {
     methods: 
     {
         ...mapActions('post', ['CommentLikeOrDisLike']),
+        content_filter: function (val)
+        {
+            return val.replace(/\n/g, "<br/>");
+        },
         Like()
         {
             if(this.Sid!=0)

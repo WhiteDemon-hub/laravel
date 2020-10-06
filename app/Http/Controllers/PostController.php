@@ -46,7 +46,7 @@ class PostController extends Controller
         {
             $post = new Post;
             $post->user_id = Session::get('id');
-            $post->content = $request->content;
+            $post->content = htmlspecialchars($request->content);
             $post->likes = '0';
         
             $post->save();
@@ -100,7 +100,7 @@ class PostController extends Controller
             
             foreach($posts as $post)
             {
-                $comments = Comment::wherePostId($post->id)->with('users')->get();
+                $comments = Comment::wherePostId($post->id)->with('users')->orderBy('id')->get();
                 if(Session::has('id'))
                 {
                     foreach($comments as $comment)

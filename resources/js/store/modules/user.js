@@ -52,22 +52,20 @@ export default {
         {
             let b = await axios
             .post('/friendlist', data)
-            commit("SendFriend", b.data)
+            commit("SendFriend", b.data.status)
         },
         async FriendInfo({commit}, data)
         {
             let b = await axios
             .post('/info-friend', data)
             commit("Finfo", b.data)
-            console.log(b);
         },
         async FriendDelete({commit}, data)
         {
             let a =
             await axios
             .delete('/friendlist/'+data.id)
-            commit("Finfo", '2')
-            console.log(a);
+            commit("Finfo", a.data.status)
         }
     },
     mutations: {
@@ -85,8 +83,8 @@ export default {
         },
         SendFriend(state, data)
         {
-            if(data==true)
-                state.IsFriend = 0
+            console.log(data);
+            state.IsFriend = data;
         },
         Finfo(state, data)
         {

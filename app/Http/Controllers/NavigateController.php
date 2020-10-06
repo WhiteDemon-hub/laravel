@@ -26,11 +26,19 @@ class NavigateController extends Controller
         if(Session::has("id"))
             return redirect('/');
         else
-            return view('auth');
+            return view('/auth');
+    }
+
+    public function showFriendList()
+    {
+        if(Session::has("id"))
+            return view('friendlist');
+        else
+            return redirect('auth');
     }
 
     public function show($id)
     {
-        return view('/profile', ['user' => User::find($id)]);
+        return view('/profile', ['user' => User::where('id', $id)->select('users.id', 'users.name', 'users.Surname', 'users.Photo', 'users.Middlename')->first()]);
     }
 }

@@ -47,6 +47,7 @@ Route::get('friend-user', 'FriendListController@getUserFriend');
 Route::get('friend-this-user', 'FriendListController@getFriend');
 Route::get('response-friend', 'FriendListController@getResponseFriend');
 Route::post('info-friend', 'FriendListController@postFriendInfo');
+Route::post('confirm-friend', 'FriendListController@postFriendConfirm');
 //Маршруты админа
 Route::resource('admin', 'AdminController');
 Route::get('admin', 'AdminController@getQuit');
@@ -58,4 +59,5 @@ Route::get('admin_panel', 'AdminNavigateController@index');
 Route::get("/", 'NavigateController@index');
 Route::get("/auth", 'NavigateController@auth');
 Route::get("/profile/{user}", 'NavigateController@show');
+Route::get("/list", 'NavigateController@showFriendList');
 
