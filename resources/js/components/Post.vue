@@ -1,6 +1,7 @@
 <template>
         <div>
-        <div class="post-item">
+        <div class="post-item" v-if="posts.del == 0">
+            <i class="fa fa-times del" aria-hidden="true" @click="Del" v-if="posts.users.id==Sid"></i>
             <div class="user-data">
                 <div class="avater-warpper">
                     <img class="avatar" :src="'/storage/'+posts.users.Photo">
@@ -26,6 +27,9 @@
                         <button type="submit" class="btn_min" title="Добавить"><i class="fa fa-plus" aria-hidden="true"></i></button>
                     </form>
                 </div>
+        </div>
+        <div class="post-item" v-else>
+            <button class="btn_std" @click="DelCancel" title="Восстоновить">Восстоновить</button>
         </div>
     </div>
 </template>
@@ -75,7 +79,7 @@ export default {
     },
     methods:{
         ...mapActions('user', ['User', 'SessionId']),
-        ...mapActions('post', ['AllUserPosts', 'CreateComment', 'LikeOrDisLike']),
+        ...mapActions('post', ['AllUserPosts', 'CreateComment', 'LikeOrDisLike', 'DelPost', 'DelPostCancel']),
         content_filter: function (val)
         {
             // var txt = document.createElement("textarea");
@@ -119,6 +123,20 @@ export default {
         ShowEvent()
         {
              this.$emit('show-event');
+        },
+        Del()
+        {
+            const data = {
+                id: this.posts.id,
+            }
+            this.DelPost(data);
+        },
+        DelCancel()
+        {
+            const data = {
+                id: this.posts.id,
+            }
+            this.DelPostCancel(data);
         }
     },
     components:

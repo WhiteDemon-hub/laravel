@@ -1,16 +1,5 @@
 <template>
     <section class="post">
-            <div class="create-post" v-if="GetUser.id===Sid">
-            <form @submit.prevent="NewPost">
-                <h2>Новый пост</h2>
-                <textarea name="" id="" cols="30" rows="10" placeholder="Что отправить?" required v-model="post_content">
-                </textarea>
-				<!-- <div id="content_p" class="textinput"  contenteditable="true">
-
-				</div> -->
-                <button type="submit" class="btn_std">Добавть</button>
-            </form>
-        </div>
         <div v-if="AllPosts.length">
         <Post 
             v-for="posts in AllPosts" :key="posts.id"
@@ -41,9 +30,6 @@ import { component } from 'vue';
 import {mapActions, mapGetters} from 'vuex'
 import Post from './../components/Post'
 export default {
-    props:[
-        'user'
-    ],
     data()
     {
         return {
@@ -54,12 +40,8 @@ export default {
     // computed: mapGetters('user', ['GetUser']),
     // computed: mapGetters('post', ['GetPosts']),
     computed: {
-        ...mapGetters('user', ['GetUser', 'GetSessionId']),
+        ...mapGetters('user', ['GetSessionId']),
         ...mapGetters('post', ['GetPosts']),
-        ItUser()
-        {
-            return this.GetUser;
-        },
         AllPosts()
         {
             return this.GetPosts;
@@ -75,26 +57,14 @@ export default {
     },
     methods:{
         ...mapActions('user', ['User', 'SessionId']),
-        ...mapActions('post', ['AllUserPosts', 'CreatePost']),
+        ...mapActions('post', ['AllNewsPosts']),
         LoadUser()
         {
-            this.User(this.user);
             this.SessionId();
         },
         LoadPost()
         {
-            this.AllUserPosts(this.ItUser);
-        },
-        NewPost()
-        {
-            const Post = {
-                user_id: this.Sid,
-				// content: document.getElementById("content_p").innerHTML
-				content: this.post_content
-			}
-			//console.log(document.getElementById("content_p").innerHTML)
-            this.CreatePost(Post);
-            this.post_content = ''
+            this.AllNewsPosts(this.ItUser);
         },
         NoShow()
         {

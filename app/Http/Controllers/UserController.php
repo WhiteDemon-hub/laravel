@@ -6,6 +6,7 @@ use Session;
 use App\User;
 use Illuminate\Http\Request;
 use Storage;
+use DB;
 
 class UserController extends Controller
 {
@@ -42,6 +43,33 @@ class UserController extends Controller
     {
         Session::flush();
         return redirect('/');
+    }
+
+    public function getfindUser(Request $request)
+    {
+        // return response() -> json([
+        //     'find_result' => User::where('name', 'like', "%".$request->findText."%")
+        //     ->orWhere('Surname', 'like', "%".$request->findText."%")
+        //     ->orWhere('Middlename', 'like', "%".$request->findText."%")
+        //     ->orWhere('concat(name, " ", Surname, " ", Middlename)', 'like', "%".$request->findText."%")
+        //     ->select('id', 'name', 'Surname', 'Middlename', 'Photo')
+        //     ->get()
+        // ]);
+        // dd(DB::select("SELECT id, `name`, Surname, Middlename, Photo
+        // FROM users WHERE `name` LIKE '%$request->findText%' 
+        // OR Surname LIKE '%$request->findText%' 
+        // OR Middlename LIKE '%$request->findText%'
+        // OR concat(name, ' ', Surname, ' ', Middlename) LIKE '%$request->findText%'
+        // OR concat(Surname, ' ', name, ' ', Middlename) LIKE '%$request->findText%'"));
+        return response() -> json([
+            'find_result' => DB::select("SELECT id, `name`, Surname, Middlename, Photo
+            FROM users WHERE `name` LIKE '%$request->findText%' 
+            OR Surname LIKE '%$request->findText%' 
+            OR Middlename LIKE '%$request->findText%'
+            OR concat(name, ' ', Surname, ' ', Middlename) LIKE '%$request->findText%'
+            OR concat(Surname, ' ', name) LIKE '%$request->findText%'"),
+            'text' => $request->findText
+        ]);
     }
 
     /**
@@ -112,6 +140,8 @@ class UserController extends Controller
     public function postAuth(Request $request)
     {
         $user = User::where('email', $request->email)->first();
+        if($user != null)
+        {
         if($user->password == md5($request->password))
         {
             Session::put('id', $user->id);
@@ -125,6 +155,11 @@ class UserController extends Controller
         {
             return response() ->  json(['message' => "Неверный email или пароль"]);
             // return response() ->  json(['message' => $user->email]);
+        }
+        }
+        else
+        {
+            return response() ->  json(['message' => "Неверный email или пароль"]);
         }
     }
 

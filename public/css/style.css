@@ -13,7 +13,8 @@
 }
 
 .friend,
-.friend-requests {
+.friend-requests,
+.find {
   width: 80%;
   margin: 30px auto;
   padding: 10px;
@@ -55,6 +56,19 @@
 }
 
 .fa-heart:hover {
+  color: #e4485ddd;
+}
+
+.del {
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+  top: 0;
+  margin-top: 5px;
+  color: white;
+}
+
+.del:hover {
   color: #e4485ddd;
 }
 
@@ -115,13 +129,19 @@ input[type=file] {
   display: none;
 }
 
-textarea {
+textarea,
+.textinput {
   resize: none;
   width: 80%;
   border: none;
   border-radius: 20px;
   padding: 10px;
   box-shadow: 0 0 10px #4b98e0dd;
+}
+
+.textinput {
+  height: 200px;
+  text-align: left;
 }
 
 input[type=text],
@@ -246,6 +266,7 @@ form > * {
   border-radius: 5px;
   border: solid 2px black;
   box-shadow: 5px 5px 5px black;
+  position: relative;
 }
 
 .avater-warpper {
@@ -287,6 +308,7 @@ form > * {
 
 .comment-item {
   margin: 5px;
+  position: relative;
 }
 
 .comment-item > .comment-data {
@@ -398,7 +420,7 @@ form > * {
   width: 80%;
   margin: auto;
   justify-content: space-between;
-  max-width: 420px;
+  max-width: 560px;
   height: 30px;
 }
 
@@ -439,6 +461,11 @@ form > * {
 }
 
 .count * {
+  margin: auto;
+}
+
+.find input[type=text] {
+  width: 90%;
   margin: auto;
 }
 

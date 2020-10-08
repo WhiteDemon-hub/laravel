@@ -14,6 +14,7 @@ Vue.component('friendlist-component', require('./components/FriendList').default
 Vue.component('proposalfriend-component', require('./components/ProposalFriend').default);
 Vue.component('frienditem-component', require('./components/FrienItem').default);
 Vue.component('menu-component', require('./components/Menu').default);
+Vue.component('news-component', require('./components/News').default);
 
 //Плагины
 import store from './store/';

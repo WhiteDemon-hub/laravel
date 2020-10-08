@@ -68,6 +68,21 @@ $line-height-base: 1.6;
     color: $color_red;
 }
 
+.del
+{
+    position: absolute;
+    right: 0;
+    margin-right: 5px;
+    top: 0;
+    margin-top: 5px;
+    color: white;
+}
+
+.del:hover
+{
+    color: $color_red;
+}
+
 .btn_std_re
 {
     @extend %btn-h-h;
@@ -137,7 +152,7 @@ input[type="radio"], input[type="file"]
 {
     display: none;
 }
-textarea {
+textarea, .textinput {
     resize: none;
     width: 80%;
     border: none;
@@ -145,6 +160,12 @@ textarea {
     padding: 10px;
     box-shadow: 0 0 10px $color_blue;
 }
+
+.textinput {
+    height: 200px;
+    text-align: left;
+}
+
 input[type="text"], input[type="password"], textarea
 {
     outline: none;
@@ -295,6 +316,7 @@ form > *
     border-radius: 5px;
     border: solid 2px black;
     box-shadow: 5px 5px 5px black;
+    position: relative;
 }
 
 .avater-warpper
@@ -342,6 +364,7 @@ form > *
 {
     @extend %flex-pareant-row;
     margin: 5px;
+    position: relative;
 }
 .comment-item > .comment-data
 {
@@ -356,10 +379,6 @@ form > *
     font-size: 30px;
     color: $color_blue;
     
-}
-.create-comment
-{
-
 }
 .create-comment form
 {
@@ -477,7 +496,7 @@ form > *
     width: 80%;
     margin: auto;
     justify-content: space-between;
-    max-width: 420px;
+    max-width: 560px;
     height: 30px;
 }
 .menu ul li
@@ -530,10 +549,16 @@ form > *
 
 //Friend
 
-.friend, .friend-requests
+.friend, .friend-requests, .find
 {
     @extend %contener-std;
     
+}
+
+.find input[type="text"]
+{
+    width: 90%;
+    margin: auto;
 }
 
 .friend h2, .friend-requests h2

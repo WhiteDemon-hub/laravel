@@ -24,6 +24,7 @@ Route::post('user-register', 'UserController@postRegister');
 Route::post('user-from-post-or-comment', 'UserController@postUserFromPostOrComment');
 Route::post('user-auth', 'UserController@postAuth');
 Route::get('user-session', 'UserController@getSessionId');
+Route::get('user-find', 'UserController@getfindUser');
 
 
 //Маршруты сообщении
@@ -31,15 +32,18 @@ Route::resource('message', 'MessagesController');
 Route::post('history-message', 'MessagesController@postChatHistory');
 Route::post('history-new-message', 'MessagesController@postNewMessage');
 
-//Маршруты постов
+//Маршруты постовgetNews
 Route::resource('post', 'PostController');
 Route::post('post-like', 'PostController@postLike');
 Route::get('post-user', 'PostController@getUserPost');
+Route::get('news-user', 'PostController@getNews');
+Route::post('post-del-cancel', 'PostController@postReestablish');
 
 //Маршруты комментариев
 Route::resource('comment', 'CommentController');
 Route::post('comment-like', 'CommentController@postLike');
 Route::get('comment-post', 'CommentController@getCommentofPost');
+Route::post('comment-del-cancel', 'CommentController@postReestablish');
 
 //Маршруты френд листа
 Route::resource('friendlist', 'FriendListController');
@@ -60,4 +64,5 @@ Route::get("/", 'NavigateController@index');
 Route::get("/auth", 'NavigateController@auth');
 Route::get("/profile/{user}", 'NavigateController@show');
 Route::get("/list", 'NavigateController@showFriendList');
+Route::get("/news", 'NavigateController@showNews');
 

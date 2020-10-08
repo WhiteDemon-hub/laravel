@@ -37,6 +37,14 @@ class NavigateController extends Controller
             return redirect('auth');
     }
 
+    public function showNews()
+    {
+        if(Session::has("id"))
+            return view('news');
+        else
+            return redirect('auth');
+    }
+
     public function show($id)
     {
         return view('/profile', ['user' => User::where('id', $id)->select('users.id', 'users.name', 'users.Surname', 'users.Photo', 'users.Middlename')->first()]);

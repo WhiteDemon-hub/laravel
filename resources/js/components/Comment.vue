@@ -1,5 +1,7 @@
 <template>
-    <div class="comment-item">
+    <div>
+        <div class="comment-item" v-if="comment.del == 0">
+            <i class="fa fa-times del" aria-hidden="true" @click="Del" v-if="comment.users.id==Sid"></i>
             <div class="avater-warpper">
                 <img class="avatar" :src="'/storage/'+comment.users.Photo">
             </div>
@@ -14,6 +16,10 @@
                     <p><i class="fa fa-heart" @click="Like" v-bind:class="{red: comment.is_like==1}" aria-hidden="true"> </i>{{comment.likes}}</p>
                 </div>
             </div>
+        </div>
+        <div class="comment-item" v-else>
+            <button class="btn_std" @click="DelCancel" title="Восстоновить">Восстоновить</button>
+        </div>
     </div>
 </template>
 
@@ -48,7 +54,7 @@ export default {
     },
     methods: 
     {
-        ...mapActions('post', ['CommentLikeOrDisLike']),
+        ...mapActions('post', ['CommentLikeOrDisLike', 'DelCommentCancel', 'DelComment']),
         content_filter: function (val)
         {
             return val.replace(/\n/g, "<br/>");
@@ -69,6 +75,20 @@ export default {
             {
                 this.$emit('show-event');
             }
+        },
+        Del()
+        {
+            const data = {
+                id: this.comment.id,
+            }
+            this.DelComment(data);
+        },
+        DelCancel()
+        {
+            const data = {
+                id: this.comment.id,
+            }
+            this.DelCommentCancel(data);
         }
     }
     

@@ -22,6 +22,7 @@ class CreateMessagesTable extends Migration
             $table->text('content');
             $table->boolean('del_user_from')->default('0');
             $table->boolean('del_user_to')->default('0');
+            $table->boolean('viewed')->default('0');
             $table->timestamps();
             
             

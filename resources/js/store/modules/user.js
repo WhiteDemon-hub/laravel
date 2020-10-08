@@ -66,7 +66,18 @@ export default {
             await axios
             .delete('/friendlist/'+data.id)
             commit("Finfo", a.data.status)
-        }
+        },
+        async Find({commit}, data)
+        {
+            axios
+            .get('/user-find?findText='+data.findText)
+            .then(
+                response =>
+                {
+                    commit("LoadFind", response.data.find_result);
+                }
+            )
+        },
     },
     mutations: {
         Erorr(state, data)
@@ -89,6 +100,10 @@ export default {
         Finfo(state, data)
         {
             state.IsFriend = data;
+        },
+        LoadFind(state, data)
+        {
+            state.finduser = data;
         }
     },
     state:
@@ -96,7 +111,8 @@ export default {
         message: '',
         user: [],
         session_id: '',
-        IsFriend: 2
+        IsFriend: 2,
+        finduser: []
     },
     getters:
     {
@@ -115,6 +131,10 @@ export default {
         GetFriendInfo(state)
         {
             return state.IsFriend;
+        },
+        GetFind(state)
+        {
+            return state.finduser;
         }
     }
 }

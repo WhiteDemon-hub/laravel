@@ -143,14 +143,40 @@ class CommentController extends Controller
         //
     }
 
+    public function postReestablish(Request $request)
+    {
+        if(Session::has('id'))
+        {
+            $comment = Comment::where([['id', '=', $request->id], ['user_id', Session::get('id')]])->first();
+            $comment->del='0';
+            $comment->save();
+            return response() -> json([
+                'id' => $comment->id,
+                'del' => $comment->del,
+                'post_id' => $comment->post_id
+            ]);
+        }
+        return null;
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy($id)
     {
-        $comment->delete();
+        if(Session::has('id'))
+        {
+            $comment = Comment::where([['id', '=', $id], ['user_id', Session::get('id')]])->first();
+            $comment->del='1';
+            $comment->save();
+            return response() -> json([
+                'id' => $comment->id,
+                'del' => $comment->del,
+                'post_id' => $comment->post_id
+            ]);
+        }
+        return null;
     }
 }

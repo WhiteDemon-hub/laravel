@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->text('content');
             $table->bigInteger('likes');
+            $table->boolean('del')->default('0');
             $table->timestamps();
             
         });
